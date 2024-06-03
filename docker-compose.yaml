@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  kripto:
+    image: nginx:latest
+    container_name: kripto
+    volumes:
+      - ./files:/usr/share/nginx/html/
+
+  caddy:
+    image: caddy:2.7.6
+    container_name: caddy
+    command: caddy reverse-proxy --from https://kripto.radatuli.shop:443 --to http://kripto:80
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - data:/data
+      - config:/config
+
+volumes:
+  data:
+  config:
