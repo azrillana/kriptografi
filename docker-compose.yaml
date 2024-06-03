@@ -3,12 +3,14 @@ version: '3'
 services:
   kripto:
     image: nginx:latest
+    restart: unless-stopped
     container_name: kripto
     volumes:
       - ./files:/usr/share/nginx/html/
 
   caddy:
     image: caddy:2.7.6
+    restart: unless-stopped
     container_name: caddy
     command: caddy reverse-proxy --from https://kripto.radatuli.shop:443 --to http://kripto:80
     ports:
